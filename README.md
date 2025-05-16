@@ -57,9 +57,9 @@ Detail Dataset:
     - Format File: CSV (.csv)
 
 Kondisi Data: <br>
-    - Pada file **Books.csv** terdapat 8 fitur dengan tipe data object. Kemudian, terdapat beberapa kolom missing values seperti Book-Author, Publisher, dan Image-URL-L <br>
-    - Pada file **Ratings.csv** terdapat 3 fitur dengan User-ID (tipe data integer), ISBN (tipe data object), dan Book-Rating (tipe data integer). Kemudian, pada file ini tidak ditemukan adanya missing values <br>
-    - Pada file **Users.csv** terdapat 3 fitur dengan User-ID (tipe data integer), Location (tipe data object), dan Age (tipe data float). Kemudian, terdapat kolom missing values yakni kolom Age <br>
+- Pada file **Books.csv** terdapat 8 fitur dengan tipe data object. Kemudian, terdapat beberapa kolom missing values seperti Book-Author, Publisher, dan Image-URL-L <br>
+- Pada file **Ratings.csv** terdapat 3 fitur dengan User-ID (tipe data integer), ISBN (tipe data object), dan Book-Rating (tipe data integer). Kemudian, pada file ini tidak ditemukan adanya missing values <br>
+- Pada file **Users.csv** terdapat 3 fitur dengan User-ID (tipe data integer), Location (tipe data object), dan Age (tipe data float). Kemudian, terdapat kolom missing values yakni kolom Age <br>
 
 Variabel-variabel pada Books dataset adalah sebagai berikut: <br>
 1. Books.csv
@@ -211,12 +211,15 @@ Untuk menyelesaikan permasalahan sistem rekomendasi buku ini, dilakukan beberapa
         ```
 
 ## Evaluation
-Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
+Berdasarkan hal tersebut di atas, pada projek ini, terkhusus pada Collaborative Filtering akan memilih dan menggunakan metrik Root Mean Squared Error (RMSE). Berikut ini penjelasan terkait hal tersebut:
 
-Berdasarkan hal tersebut di atas, pada projek ini, terkhusus pada Collaborative Filtering akan memilih dan menggunakan metrik Root Mean Squared Error (RMSE). Berikut ini beberapa penjelasan terkait hal tersebut:
+- Model rekomendasi buku dievaluasi menggunakan metrik RMSE pada data latih dan data uji selama 25 epoch. Hasil menunjukkan bahwa RMSE pada data latih menurun secara signifikan, sementara RMSE pada data uji juga menurun namun lebih lambat, terutama setelah epoch ke-15. Hal ini mengindikasikan adanya overfitting, di mana model semakin baik pada data latih namun kurang mampu menggeneralisasi pada data uji. Meskipun demikian, model masih dapat melakukan rekomendasi dengan baik.
+![visualisasi hasil metrik train vs test](https://github.com/user-attachments/assets/6032f179-3f58-406f-a85a-e4ac41ec9f08)
+
 
 **Rubrik/Kriteria Tambahan (Opsional)**: 
 - RMSE (Root Mean Squared Error) <br>
+  ![Formula RMSE](https://github.com/user-attachments/assets/650138be-60d9-4298-b32c-480388e13b01)
   Formula ini digunakan untuk mengukur seberapa jauh prediksi dari nilai sebenarnya. Semakin kecil RMSE, semakin akurat modelnya. Cara kerja dari formula ini dimulai dengan menghitung selisih antara rating prediksi dengan rating aktual, kemudian hasil selisih dikuadratkan untuk menghilangkan negatif. Setelah itu, jumlahkan semua selisih kuadrat dan membagi nya dengan jumlah data. Terakhir, akar kuadrat kan sehingga mengembalikan hasil ke skala asli rating tersebut
  
 

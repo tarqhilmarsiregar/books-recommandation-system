@@ -104,30 +104,44 @@ Variabel-variabel pada Books dataset adalah sebagai berikut: <br>
 
 ## Data Preparation
 Sebelum membangun sistem rekomendasi Content Based Filtering, dilakukan beberapa tahap persiapan data untuk memastikan bahwa data dalam kondisi optimal untuk digunakan lebih lanjut. Hal hal tersebut diantaranya:
-1. Mengatasi **missing values**
-2. Mengurutkan buku berdasarkan ISBN kemudian menyimpan nya ke dalam variabel preparation
-3. Menghapus data duplikat pada variabel preparation
-4. Mengambil 8000 data secara acak
-5. Mengonversi data ISBN, Book-Title, dan Book-Author ke dalam bentuk list
-6. Membuat dictionary untuk variabel books_id, books_title, dan books_author yang telah dibuat sebelumnya
+1. Menggabungkan seluruh ISBN pada buku
+2. Mengurutkan dan menghapus data yang sama pada books_all
+3. Menggabungkan seluruh User ID
+4. Mengurutkan dan menghapus data yang sama pada users_all
+5. Menggabungkan dataframe buku, rating dan user
+6. Mengatasi **missing values**
+7. Mengurutkan buku berdasarkan ISBN kemudian menyimpan nya ke dalam variabel preparation
+8. Menghapus data duplikat pada variabel preparation
+9. Mengambil 8000 data secara acak
+10. Mengonversi data ISBN, Book-Title, dan Book-Author ke dalam bentuk list
+11. Membuat dictionary untuk variabel books_id, books_title, dan books_author yang telah dibuat sebelumnya
+12. Ekstraksi Fitur dengan TF-IDF Vectorizer
 
 Kemudian, sebelum membangun Collaborative Filtering, dilakukan beberapa tahap persiapan data untuk memastikan bahwa data dalam kondisi optimal untuk digunakan lebih lanjut. Hal hal tersebut diantaranya:
 1. Menyandikan (encode) fitur user dan ISBN ke dalam indeks integer 
 2. Memetakan User-ID dan ISBN ke dataframe yang berkaitan
 3. Mengecek beberapa hal dalam data seperti jumlah user, jumlah buku, kemudian mengubah nilai rating menjadi float
+4. Pembagian Data
 
 **Rubrik/Kriteria Tambahan (Opsional)**: <br>
 Content Based Filtering:
-1. Penghapusan **missing values** dilakukan agar proses analisis lebih akurat dan tidak bias akibat data yang hilang
-2. Pengurutan data buku berdasarkan ISBN dilakukan agar posisi data tersebut tersusun secara berurutan dan menyimpan nya ke variabel baru preparation
-3. Penghapusan data duplikat dilakukan untuk mengurangi redudansi data, memperbaiki kualitas data sehingga bisa lebih mudah diolah dan diinterpretasi, serta mempercepat proses pemrosesan data dengan dataset yang lebih ringan
-4. Pengambilan data acak sebanyak 8000 agar proses perhitungan cosine similarity pada google colab berjalan dengan lancar tanpa terjadinya ram crash dengan jumlah data yang besar
-5. Mengonversi data dan membuatnya ke dalam dictionary untuk mengambil kolom kolom yang hanya akan digunakan dalam proses menemukan representasi fitur penting dari setiap book author di tahapan modeling
+1. Penggabungan seluruh ISBN pada buku ini dilakukan untuk menggabungkan seluruh ISBN dari dua data frame (df_books dan df_ratings) menggunakan NumPy sehingga memastikan bahwa semua ISBN dari dua sumber data berbeda terkumpul dalam satu array tanpa ada duplikasi per data frame
+2. Mengurutkan dan menghapus data yang sama pada books_all ini dilakukan untuk mengurutkan dan menghapus duplikasi dari kumpulan ISBN pada variabel books_all sehingga hal ini memastikan bahwa ISBN yang tersimpan dalam books_all tidak ada yang berulang dan sudah diurutkan secara alfabetis atau numerik
+3. Menggabungkan seluruh User ID dilakukan untuk menggabungkan seluruh User-ID dari dua data frame (df_ratings dan df_users) menggunakan NumPy sehingga memastikan bahwa semua User-ID dari dua sumber data terkumpul dalam satu array, tanpa ada duplikasi per data frame
+4. Mengurutkan dan menghapus data yang sama pada users_all bertujuan untuk menghapus duplikasi dan mengurutkan seluruh User-ID yang sudah digabungkan sebelumnya dalam variabel users_all sehingga variabel users_all hanya berisi User-ID yang unik dan sudah terurut secara alfabetis atau numerik
+5. Menggabungkan dataframe buku, rating dan user bertujuan untuk menggabungkan data buku dan rating berdasarkan ISBN. Kemudian, menggabungkan hasil tersebut dengan data pengguna berdasarkan User-ID sehingga Hasil akhir nya (books) akan berisi data buku, rating, dan pengguna yang terhubung satu sama lain
+6. Penghapusan **missing values** dilakukan agar proses analisis lebih akurat dan tidak bias akibat data yang hilang
+7. Pengurutan data buku berdasarkan ISBN dilakukan agar posisi data tersebut tersusun secara berurutan dan menyimpan nya ke variabel baru preparation
+8. Penghapusan data duplikat dilakukan untuk mengurangi redudansi data, memperbaiki kualitas data sehingga bisa lebih mudah diolah dan diinterpretasi, serta mempercepat proses pemrosesan data dengan dataset yang lebih ringan
+9. Pengambilan data acak sebanyak 8000 agar proses perhitungan cosine similarity pada google colab berjalan dengan lancar tanpa terjadinya ram crash dengan jumlah data yang besar
+10. Mengonversi data dan membuatnya ke dalam dictionary untuk mengambil kolom kolom yang hanya akan digunakan dalam proses menemukan representasi fitur penting dari setiap book author di tahapan modeling
+11. Ekstraksi Fitur dengan TF-IDF Vectorizer bertujuan untuk mengekstraksi kata unik dari data pada kolom book_author, menghitung IDF dari setiap kata, mendapatkan daftar kata sebagai fitur yang akan digunakan dalam model dan memberikan representasi teks dalam bentuk vektor TF-IDF yang siap digunakan untuk analisis teks atau pembuatan model machine learning
 
 Collaborative Filtering:
 1. Tahap encoding pada data preparation ini dilakukan untuk mempermudah proses komputasi dan analisis data seperti menghapus duplikasi data, mengelompokkan data, konversi ke format numerik 
 2. Mapping User-ID dan ISBN dilakukan untuk mengonversi data ke dalam bentuk angka
 3. Tahapan pengecekan jumlah user, jumlah buku dan mengubah tipe data rating menjadi float untuk memastikan keselarasan data, memahami distribusi rating, mengantisipasi error jika terjadi ketidaksesuaian pada jumlah user atau buku
+4. Pembagian Data, tahap ini membagi data menjadi 80% data latih (training) dan 20% data validasi untuk keperluan pelatihan model sehingga dengan pembagian ini, model bisa belajar dari data training dan diuji pada data validasi untuk melihat performanya
 
 ## Modeling
 Untuk menyelesaikan permasalahan sistem rekomendasi buku ini, dilakukan beberapa tahapan pemodelan secara sistematis. Dua algoritma atau pendekatan yang digunakan yaitu Content Based Filtering dan Collaborative Filtering. Berikut penjelasan tiap algoritma atau pendekatan yang digunakan:

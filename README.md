@@ -4,7 +4,6 @@
 
 Pada era digital, jumlah informasi yang tersedia bagi pengguna meningkat secara signifikan, termasuk dalam hal pemilihan buku yang sesuai dengan preferensi individu. Hal ini dapat menimbulkan tantangan dalam menemukan rekomendasi yang tepat dan relevan. Sistem rekomendasi dirancang untuk menyaring informasi yang melimpah tersebut guna memberikan pilihan yang lebih terarah kepada pengguna.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
 - Mengapa masalah tersebut harus diselesaikan? <br>
 Peningkatan jumlah buku digital serta berkembangnya platform pembaca daring telah menyebabkan ketersediaan informasi menjadi sangat melimpah. Kondisi ini dapat mengakibatkan kesulitan bagi pengguna dalam menemukan buku yang sesuai dengan minat dan preferensi mereka, sehingga berpotensi menurunkan tingkat keterlibatan dan kepuasan pengguna. Oleh karena itu, diperlukan sistem rekomendasi yang efektif untuk meningkatkan pengalaman pengguna melalui penyajian pilihan buku yang lebih relevan dan personal.
 
@@ -30,7 +29,6 @@ Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
 - Menghasilkan sejumlah rekomendasi buku yang dipersonalisasi untuk pengguna dengan teknik content-based filtering
 - Menghasilkan sejumlah rekomendasi buku yang sesuai dengan preferensi pengguna dan belum pernah dibaca sebelumnya dengan teknik collaborative filtering.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
 - Menambahkan bagian “Solution Approach” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
 
     ### Solution statements
@@ -82,7 +80,6 @@ Variabel-variabel pada Books dataset adalah sebagai berikut: <br>
     - Location: Lokasi pengguna
     - Age: Umur pengguna
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
 1. Deskripsi variabel <br>
     Menampilkan jumlah data dan tipe data yang digunakan masing masing kolom
     ```python
@@ -123,7 +120,6 @@ Kemudian, sebelum membangun Collaborative Filtering, dilakukan beberapa tahap pe
 3. Mengecek beberapa hal dalam data seperti jumlah user, jumlah buku, kemudian mengubah nilai rating menjadi float
 4. Pembagian Data
 
-**Rubrik/Kriteria Tambahan (Opsional)**: <br>
 Content Based Filtering:
 1. Penggabungan seluruh ISBN pada buku ini dilakukan untuk menggabungkan seluruh ISBN dari dua data frame (df_books dan df_ratings) menggunakan NumPy sehingga memastikan bahwa semua ISBN dari dua sumber data berbeda terkumpul dalam satu array tanpa ada duplikasi per data frame
 2. Mengurutkan dan menghapus data yang sama pada books_all ini dilakukan untuk mengurutkan dan menghapus duplikasi dari kumpulan ISBN pada variabel books_all sehingga hal ini memastikan bahwa ISBN yang tersimpan dalam books_all tidak ada yang berulang dan sudah diurutkan secara alfabetis atau numerik
@@ -146,7 +142,6 @@ Collaborative Filtering:
 ## Modeling
 Untuk menyelesaikan permasalahan sistem rekomendasi buku ini, dilakukan beberapa tahapan pemodelan secara sistematis. Dua algoritma atau pendekatan yang digunakan yaitu Content Based Filtering dan Collaborative Filtering. Berikut penjelasan tiap algoritma atau pendekatan yang digunakan:
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
 1. Content-Based Filtering (CBF) adalah teknik yang digunakan dalam sistem rekomendasi untuk memberikan saran berdasarkan kesamaan konten dari item yang sudah disukai oleh pengguna. Dalam konteks rekomendasi buku, pendekatan ini bertujuan untuk menyarankan buku-buku baru yang memiliki karakteristik serupa dengan buku yang sudah dibaca oleh pengguna. Untuk mencapai tujuan ini, menggunakan teknik TF-IDF (Term Frequency-Inverse Document Frequency) dan Cosine Similarity. Pada dasarnya, CBF bekerja dengan menganalisis deskripsi, judul, atau atribut lain dari buku untuk menemukan kata-kata yang paling mencerminkan isi dari buku tersebut. Karena data ini berupa teks, maka dibutuhkan cara untuk mengonversinya menjadi bentuk numerik agar bisa dihitung oleh komputer. Di sinilah peran TF-IDF menjadi sangat penting. TF-IDF adalah teknik pemrosesan teks yang mengukur seberapa penting sebuah kata dalam suatu dokumen dibandingkan dengan seluruh koleksi dokumen. Teknik ini berguna untuk menangkap kata-kata yang sering muncul di suatu buku tetapi jarang muncul di buku lainnya, sehingga kata tersebut dianggap lebih representatif. Prosesnya dimulai dengan mengambil data dari kolom teks, dalam hal ini penulis buku. Data ini kemudian diproses oleh TF-IDF Vectorizer, yang akan mengonversi setiap kata menjadi vektor angka berdasarkan frekuensi dan relevansi kata tersebut. Hasil akhirnya adalah sebuah matriks vektor TF-IDF yang merepresentasikan setiap buku dalam bentuk numerik. Setelah semua buku dikonversi menjadi vektor, kita perlu menghitung tingkat kemiripan antar buku untuk memberikan rekomendasi. Dalam hal ini, kita menggunakan Cosine Similarity, sebuah teknik yang mengukur kemiripan dua vektor dengan melihat sudut di antara mereka. Cosine Similarity dinilai berdasarkan sudut antara dua vektor dalam ruang multidimensi. Jika sudut antara dua vektor sangat kecil (mendekati nol derajat), itu berarti kedua vektor tersebut hampir sejajar dan dianggap sangat mirip. Sebaliknya, jika sudutnya besar (mendekati 90 atau 180 derajat), maka kedua vektor tersebut dianggap tidak mirip. Cosine Similarity dihitung dengan cara membagi hasil perkalian dot product antara dua vektor dengan hasil kali norma dari kedua vektor tersebut. Nilai yang dihasilkan berkisar antara -1 hingga 1. Semakin mendekati nilai 1, artinya kedua buku memiliki konten yang sangat mirip, sedangkan nilai mendekati 0 menunjukkan tidak ada kemiripan. Dengan pendekatan ini, CBF tidak memerlukan data dari pengguna lain, melainkan hanya bergantung pada konten dari buku itu sendiri. Hal ini sangat berguna dalam situasi cold start, ketika pengguna baru belum memberikan banyak rating atau belum memiliki banyak riwayat interaksi. Namun, teknik ini juga memiliki kelemahan, yaitu kurang memperhatikan variasi preferensi pengguna. Jika seorang pengguna menyukai buku dari penulis buku yang berbeda-beda, rekomendasi CBF bisa menjadi kurang akurat karena hanya fokus pada kesamaan konten dari buku-buku yang pernah disukai sebelumnya. Secara keseluruhan, metode Content-Based Filtering dengan TF-IDF dan Cosine Similarity sangat berguna untuk menemukan buku dengan konten yang sejenis. Pendekatan ini mengutamakan teks sebagai sumber informasi utama dan berfokus pada pemetaan konten untuk menghasilkan rekomendasi yang lebih personal dan kontekstual.
     - Kelebihan:
         - Personalisasi berdasarkan minat didasarkan pada preferensi pengguna
@@ -230,11 +225,6 @@ Berdasarkan hal tersebut di atas, pada projek ini, terkhusus pada Collaborative 
 - Model rekomendasi buku dievaluasi menggunakan metrik RMSE pada data latih dan data uji selama 25 epoch. Hasil menunjukkan bahwa RMSE pada data latih menurun secara signifikan, sementara RMSE pada data uji juga menurun namun lebih lambat, terutama setelah epoch ke-15. Hal ini mengindikasikan adanya overfitting, di mana model semakin baik pada data latih namun kurang mampu menggeneralisasi pada data uji. Meskipun demikian, model masih dapat melakukan rekomendasi dengan baik.
 ![visualisasi hasil metrik train vs test](https://github.com/user-attachments/assets/6032f179-3f58-406f-a85a-e4ac41ec9f08)
 
-
-**Rubrik/Kriteria Tambahan (Opsional)**: 
 - RMSE (Root Mean Squared Error) <br>
   ![Formula RMSE](https://github.com/user-attachments/assets/650138be-60d9-4298-b32c-480388e13b01)
   Formula ini digunakan untuk mengukur seberapa jauh prediksi dari nilai sebenarnya. Semakin kecil RMSE, semakin akurat modelnya. Cara kerja dari formula ini dimulai dengan menghitung selisih antara rating prediksi dengan rating aktual, kemudian hasil selisih dikuadratkan untuk menghilangkan negatif. Setelah itu, jumlahkan semua selisih kuadrat dan membagi nya dengan jumlah data. Terakhir, akar kuadrat kan sehingga mengembalikan hasil ke skala asli rating tersebut
- 
-
-

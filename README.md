@@ -220,8 +220,12 @@ Untuk menyelesaikan permasalahan sistem rekomendasi buku ini, dilakukan beberapa
         ```
 
 ## Evaluation
-Berdasarkan hal tersebut di atas, pada projek ini, terkhusus pada Collaborative Filtering akan memilih dan menggunakan metrik Root Mean Squared Error (RMSE). Berikut ini penjelasan terkait hal tersebut:
+Berdasarkan hal tersebut di atas, pada projek ini akan memilih dan menggunakan metrik precision pada sistem rekomendasi Content Based Filtering dan RMSE (Root Mean Squared Error) pada sistem rekomendasi Collaborative Filtering. Berikut ini penjelasan terkait masing masing metrik evaluasi tersebut: <br>
 
+Content Based Filtering (Precision):
+- Pada pendekatan sistem rekomendasi ini, model dievaluasi menggunakan metrik presisi di mana hal ini dilakukan dengan cara menghitung jumlah buku rekomendasi yang relevan (similar) dibagi dengan jumlah buku keseluruhan yang direkomendasikan, kemudian dikali dengan 100 untuk mendapatkan persentase hasil metrik evaluasi presisi nya. Dalam hal ini, model dapat memberikan 2 rekomendasi buku yang relevan dari total keseluruhan 5 buku yang direkomendasikan sehingga mendapatkan hasil presisi 40% pada model Content Based Filtering.
+
+Collaborative Filtering (RMSE):
 - Model rekomendasi buku dievaluasi menggunakan metrik RMSE pada data latih dan data uji selama 25 epoch. Hasil menunjukkan bahwa RMSE pada data latih menurun secara signifikan, sementara RMSE pada data uji juga menurun namun lebih lambat, terutama setelah epoch ke-15. Hal ini mengindikasikan adanya overfitting, di mana model semakin baik pada data latih namun kurang mampu menggeneralisasi pada data uji. Meskipun demikian, model masih dapat melakukan rekomendasi dengan baik.
 ![visualisasi hasil metrik train vs test](https://github.com/user-attachments/assets/6032f179-3f58-406f-a85a-e4ac41ec9f08)
 
